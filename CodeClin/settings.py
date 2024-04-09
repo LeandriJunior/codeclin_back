@@ -43,14 +43,13 @@ SHARED_APPS = (
     'django.contrib.messages',
     'django.contrib.sessions',
     'django.contrib.sites',
-    # everything below here is optional
     'core',
 
 )
 
 TENANT_APPS = (
-    # your tenant-specific apps
     'clinica',
+    'clinica.agenda',
     'core.user'
 )
 
