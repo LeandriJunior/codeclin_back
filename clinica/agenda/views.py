@@ -13,3 +13,9 @@ class HomeView(APIView):
             data_fim=self.request.GET.get('data_fim')
         )
         return JsonResponse(response, safe=False, status=response['status_code'])
+
+
+class EventoView(APIView):
+    def get(self, request):
+        response = BO.clinica.agenda.Agenda(evento_id=self.request.GET.get('evento_id')).buscar_evento()
+        return JsonResponse(response, safe=False, status=response['status_code'])
