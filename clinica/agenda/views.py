@@ -8,5 +8,8 @@ import BO.clinica.agenda
 # Create your views here.
 class HomeView(APIView):
     def get(self, request):
-        response = BO.clinica.agenda.Agenda().buscar_agenda()
+        response = BO.clinica.agenda.Agenda().buscar_agenda(
+            data_ini=self.request.GET.get('data_ini'),
+            data_fim=self.request.GET.get('data_fim')
+        )
         return JsonResponse(response, safe=False, status=response['status_code'])
