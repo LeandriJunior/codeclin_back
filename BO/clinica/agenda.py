@@ -1,13 +1,11 @@
 from datetime import datetime
 
 from BO.base.decorators import Response
-from model.base.sql import SQLConexao
 import model.clinica.agenda as agendaModel
 
 
-class Agenda(SQLConexao):
+class Agenda:
     def __init__(self, evento_id=None):
-        super().__init__()
         self.evento_id = evento_id
 
     @Response(desc_error='Erro ao buscar dados da agenda', lista_retornos=['agenda'])
