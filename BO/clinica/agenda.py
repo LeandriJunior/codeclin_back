@@ -2,7 +2,7 @@ from datetime import datetime
 
 from BO.base.decorators import Response
 import model.clinica.agenda as agendaModel
-
+import BO.user.funcionario as funcionario
 
 class Agenda:
     def __init__(self, evento_id=None):
@@ -11,7 +11,6 @@ class Agenda:
     @Response(desc_error='Erro ao buscar dados da agenda', lista_retornos=['agenda'])
     def buscar_agenda(self, data_ini=None, data_fim=None, agenda_id=None, is_ativo=True, is_primeiro=False):
         condicao = '1=1'
-        parametros = {'data_ini': data_ini, 'data_fim': data_fim, 'agenda_id': agenda_id}
         if data_ini:
             data_ini = datetime.strptime(data_ini, "%d/%m/%Y %H:%M:%S")
             condicao += ' AND ca.data_ini > :data_ini'
@@ -25,6 +24,8 @@ class Agenda:
         if is_ativo:
             condicao += ' AND ca.status'
 
+        parametros = {'data_ini': data_ini, 'data_fim': data_fim, 'agenda_id': agenda_id}
+
         return agendaModel.AgendaModel().buscar_agenda(condicao=condicao, is_primeiro=is_primeiro, parametros=parametros)
 
     @Response(desc_error='Erro ao buscar o evento', lista_retornos=['evento'])
@@ -35,4 +36,7 @@ class Agenda:
             is_ativo=True
         )['agenda']
 
-        return agenda
+        return {
+            'agenda': agenda,
+            'lista_funcionarios': funcionario.Funcionario().buscar_funcionarios()['lista_funcionarios']
+        }

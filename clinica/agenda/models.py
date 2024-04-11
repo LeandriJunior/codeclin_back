@@ -10,8 +10,9 @@ class Agenda(core.models.Log):
     descricao = models.CharField(max_length=512, null=True)
     data_ini = models.DateTimeField(null=True)
     data_fim = models.DateTimeField(null=True)
-    #paciente_id
-    #funcionario
+    paciente_id = models.ForeignKey('cliente.Cliente', on_delete=models.SET_NULL, null=True)
+    funcionario = models.ForeignKey('funcionario.Funcionario', on_delete=models.SET_NULL, null=True, related_name='agenda_funcionario')
+    funcionario_marcacao = models.ForeignKey('funcionario.Funcionario', on_delete=models.SET_NULL, null=True, related_name='funcionario_marcacao')
     categoria = models.ForeignKey('CategoriaAgenda', on_delete=models.DO_NOTHING, null=True)
 
     class Meta:
