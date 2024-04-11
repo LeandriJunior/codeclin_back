@@ -23,9 +23,5 @@ class Migration(migrations.Migration):
             name='funcionario_marcacao',
             field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='funcionario_marcacao', to='funcionario.funcionario'),
         ),
-        migrations.AddField(
-            model_name='agenda',
-            name='paciente_id',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='cliente.cliente'),
-        ),
+
     ]
