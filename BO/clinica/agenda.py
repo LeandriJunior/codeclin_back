@@ -9,7 +9,6 @@ class Agenda(SQLConexao):
         super().__init__()
         self.evento_id = evento_id
 
-
     @Response(desc_error='Erro ao buscar dados da agenda', lista_retornos=['agenda'])
     def buscar_agenda(self, data_ini=None, data_fim=None, agenda_id=None, is_ativo=True, is_primeiro=False):
         condicao = '1=1'

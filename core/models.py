@@ -91,7 +91,7 @@ class PessoaLog(ContatoLog):
 
     dat_nasc = models.DateField(null=True)
 
-    imagem = models.FileField(upload_to='fotos/usuarios', default='fotos/sem-foto.png', null=True)
+    imagem = models.TextField(default='fotos/sem-foto.png', null=True)
 
     nm_mae = models.CharField(max_length=200, null=True)
     nm_pai = models.CharField(max_length=200, null=True)

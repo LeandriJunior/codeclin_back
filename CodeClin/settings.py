@@ -50,7 +50,10 @@ SHARED_APPS = (
 TENANT_APPS = (
     'clinica',
     'clinica.agenda',
-    'core.user'
+    'core.user',
+    'core.funcionario',
+    'core.filial',
+    'core.cliente'
 )
 
 INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
@@ -73,7 +76,7 @@ MIDDLEWARE = [
 
 WSGI_APPLICATION = 'CodeClin.wsgi.application'
 
-AUTH_USER_MODEL = 'user.UserLogin'
+AUTH_USER_MODEL = 'user.User'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
