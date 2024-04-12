@@ -14,3 +14,12 @@ class FuncionarioModel(SQLConexao):
             WHERE status
             ORDER BY nm_completo  
         """)
+
+    @Response(desc_error='Model: Erro ao pesquisar funcionarios', is_manter_retorno=True)
+    def buscar_funcionarios_pesquisa(self, pesquisa=None):
+        return self.select(query=f"""
+                    SELECT matricula, nm_completo 
+                    FROM {self.schema_cliente}.funcionario
+                    WHERE status AND nm_completo ILIKE '%{pesquisa}%'
+                    ORDER BY nm_completo  
+                """)
