@@ -3,7 +3,7 @@ from datetime import datetime
 from BO.base.decorators import Response
 import model.clinica.agenda as agendaModel
 import BO.user.funcionario as funcionario
-
+import BO.user.cliente as cliente
 class Agenda:
     def __init__(self, evento_id=None):
         self.evento_id = evento_id
@@ -38,5 +38,13 @@ class Agenda:
 
         return {
             'agenda': agenda,
-            'lista_funcionarios': funcionario.Funcionario().buscar_funcionarios()['lista_funcionarios']
+            'lista_funcionarios': funcionario.Funcionario().buscar_funcionarios()['lista_funcionarios'],
+            'lista_clientes': cliente.Cliente().buscar_clientes()['lista_clientes']
         }
+
+    @Response(desc_error='Erro ao salvar evento', lista_retornos=['evento'])
+    def salvar_evento(self, cliente_id=None, funcionario_id=None, funcionario_funcionamento_id=None, data_ini=None, data_fim=None, procedimento=None,
+                      observacao=None):
+        return True
+
+

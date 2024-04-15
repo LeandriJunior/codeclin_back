@@ -55,11 +55,11 @@ class SQLConexao:
             return None
 
     def select(self, query=None, parametros=None, is_primeiro=False, is_values_list=False, is_serializado=True,
-               limite=100, offset=0) -> list | dict | None:
+               limite=None, offset=0) -> list | dict | None:
         if 'select *' in query.lower():
             raise ValidationError('Filtre apenas os dados necessários para a busca!')
 
-        if 'limit' not in query.lower() and limite:
+        if limite:
             query = re.sub(';\\s*$', '', query)
             query = query + f' LIMIT {limite} OFFSET {offset};'
 
