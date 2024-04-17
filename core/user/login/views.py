@@ -21,7 +21,7 @@ class LoginUserView(APIView):
                                 password=password
                                 )
 
-        response = sistema.login()
+        response = sistema.login(request=request)
 
         return JsonResponse(response, status=response['status_code'])
 

@@ -27,3 +27,18 @@ class AgendaModel(SQLConexao):
                         WHERE {condicao}""",
                            parametros=parametros,
                            is_primeiro=is_primeiro)
+
+    @Response(desc_error='Model: Erro ao buscar categorias', is_manter_retorno=True)
+    def buscar_categorias(self):
+        return self.select(query=f"""
+            SELECT id, nome
+            FROM {self.schema_cliente}.clinica_agenda_categoria
+            WHERE status
+            ORDER BY nome
+        """)
+
+    def salvar_evento(self, dict_evento=None, is_edicao=False):
+        if is_edicao:
+            self.update(nm_tabela='clinica_agenda', dict_coluna_valor=dict_evento, filtro_where={'id': dict_evento['id']})
+            return
+        self.insert(nm_tabela='clinica_agenda', dict_coluna_valor=dict_evento, is_primeiro=False)

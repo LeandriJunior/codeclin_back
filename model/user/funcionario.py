@@ -7,13 +7,19 @@ class FuncionarioModel(SQLConexao):
         super().__init__()
 
     @Response(desc_error='Model: Erro ao buscar funcionarios', is_manter_retorno=True)
-    def buscar_funcionarios_combo(self):
+    def buscar_funcionarios_combo(self, funcionario_id=None, is_primeiro=False):
+        condicao = 'status'
+        if funcionario_id:
+            condicao += ' AND matricula = :funcionario_id'
+
         return self.select(query=f"""
-            SELECT matricula, nm_completo 
-            FROM {self.schema_cliente}.funcionario
-            WHERE status
-            ORDER BY nm_completo  
-        """)
+                    SELECT matricula, nm_completo 
+                    FROM {self.schema_cliente}.funcionario
+                    WHERE {condicao}
+                    ORDER BY nm_completo  
+                """,
+            is_primeiro=is_primeiro,
+            parametros={'funcionario_id': funcionario_id})
 
     @Response(desc_error='Model: Erro ao pesquisar funcionarios', is_manter_retorno=True)
     def buscar_funcionarios_pesquisa(self, pesquisa=None):
