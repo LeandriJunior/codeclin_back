@@ -80,4 +80,11 @@ class Agenda:
     def buscar_categorias(self):
         return model.clinica.agenda.AgendaModel().buscar_categorias()
 
+    @Response(desc_error='Erro ao habilitar/desabilitar evento', lista_retornos=['novo_status'])
+    def trocar_status(self, status=True):
+        return model.clinica.agenda.AgendaModel().trocar_status(
+            evento_id=self.evento_id,
+            status=status
+        )
+
 

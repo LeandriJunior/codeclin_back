@@ -10,7 +10,8 @@ class HomeView(APIView):
     def get(self, request):
         response = BO.clinica.agenda.Agenda().buscar_agenda(
             data_ini=self.request.GET.get('data_ini'),
-            data_fim=self.request.GET.get('data_fim')
+            data_fim=self.request.GET.get('data_fim'),
+            is_ativo=False
         )
         return JsonResponse(response, safe=False, status=response['status_code'])
 
@@ -29,5 +30,13 @@ class EventoView(APIView):
             data_fim=self.request.POST.get('data_fim'),
             procedimento=self.request.POST.get('procedimento'),
             observacao=self.request.POST.get('observacao')
+        )
+        return JsonResponse(response, safe=False, status=response['status_code'])
+
+
+class EventoStatusView(APIView):
+    def post(self, request):
+        response = BO.clinica.agenda.Agenda(evento_id=self.request.POST.get('id')).trocar_status(
+            status=self.request.POST.get('status')
         )
         return JsonResponse(response, safe=False, status=response['status_code'])

@@ -11,6 +11,7 @@ class Agenda(core.models.Log):
     procedimento = models.CharField(max_length=512, null=True)
     data_ini = models.DateTimeField(null=True)
     data_fim = models.DateTimeField(null=True)
+    is_concluido = models.BooleanField(null=True)
     cliente = models.ForeignKey('cliente.Cliente', on_delete=models.DO_NOTHING, null=True)
     funcionario = models.ForeignKey('funcionario.Funcionario', on_delete=models.DO_NOTHING, null=True, related_name='agenda_funcionario')
     funcionario_agendamento = models.ForeignKey('funcionario.Funcionario', on_delete=models.DO_NOTHING, null=True, related_name='funcionario_agendamento')

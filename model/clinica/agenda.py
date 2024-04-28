@@ -15,6 +15,8 @@ class AgendaModel(SQLConexao):
                                ca.procedimento,
                                ca.funcionario_id,
                                ca.cliente_id,
+                               ca.status,
+                               ca.is_concluido,
                                f.nm_completo AS funcionario_agendamento,
                                TO_CHAR(ca.data_ini, 'YYYY-MM-DD"T"HH24:MI:SS') AS start,
                                TO_CHAR(ca.data_fim, 'YYYY-MM-DD"T"HH24:MI:SS') AS end,
@@ -37,8 +39,13 @@ class AgendaModel(SQLConexao):
             ORDER BY nome
         """)
 
+    @Response(desc_error='Model: Erro ao salvar evento', is_manter_retorno=True)
     def salvar_evento(self, dict_evento=None, is_edicao=False):
         if is_edicao:
             self.update(nm_tabela='clinica_agenda', dict_coluna_valor=dict_evento, filtro_where={'id': dict_evento['id']})
             return
         self.insert(nm_tabela='clinica_agenda', dict_coluna_valor=dict_evento, is_primeiro=False)
+
+    @Response(desc_error='Model: Erro ao habilitar/desabilitar evento', is_manter_retorno=True)
+    def trocar_status(self, evento_id=None, status=None):
+        self.update(nm_tabela='clinica_agenda', dict_coluna_valor={'status': status}, filtro_where={'id': evento_id})
