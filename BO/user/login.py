@@ -28,9 +28,13 @@ class Login():
 
         if not self.user:
             raise ValidationError('Usuario ou senha incorretos!')
+
+        sessao = Sessao(user_id=self.user.id).get_sessao()
+
+        request.session['user_info'] = sessao
         return {
             'token': self.create_token(request=self.request)['token'],
-            'sessao': Sessao(user_id=self.user.id).get_sessao()
+            'sessao': sessao
         }
 
     @Response(desc_error='Erro criar token', lista_retornos=['token'])

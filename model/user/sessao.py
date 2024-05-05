@@ -12,7 +12,7 @@ class SessaoModel(SQLConexao):
             query=f"""
                     SELECT  f.matricula, f.status , f.nm_completo, f.nm_primeiro, f.nm_ultimo, f.cpf, f.cpf_form,
                             f.funcionario_responsavel_id, f.cargo_id, f.user_id, f.email,
-                            f.dat_nasc
+                            TO_CHAR(f.dat_nasc, 'YYYYMMDD') AS dat_nasc
                     FROM {self.schema_cliente}.funcionario f
                     LEFT JOIN {self.schema_cliente}.user u ON u.id = f.user_id
                     WHERE f.user_id = :user_id;
