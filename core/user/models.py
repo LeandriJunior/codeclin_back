@@ -14,6 +14,7 @@ class Profile(AbstractBaseUser, core.models.Log, PermissionsMixin):
     is_staff = models.BooleanField(null=True, default=False)
     is_atualizar_sessao = models.BooleanField(default=False, null=True)
     is_primeiro_login = models.BooleanField(default=True, null=True)
+    is_active = models.BooleanField(default=True)
     is_resetar_senha = models.BooleanField(default=False, null=True)
     senha_padrao = models.CharField(null=True, max_length=200)
     email = models.EmailField(max_length=200, null=True)

@@ -1,4 +1,3 @@
-from BO.base.decorators import Response
 from model.base.sql import SQLConexao
 
 
@@ -6,7 +5,6 @@ class AgendaModel(SQLConexao):
     def __init__(self):
         super().__init__()
 
-    @Response(desc_error='Model: Erro ao buscar dados da agenda', is_manter_retorno=True)
     def buscar_agenda(self, condicao=None, is_primeiro=None, parametros=None):
         return self.select(query=f"""
                         SELECT ca.id,
@@ -30,7 +28,6 @@ class AgendaModel(SQLConexao):
                            parametros=parametros,
                            is_primeiro=is_primeiro)
 
-    @Response(desc_error='Model: Erro ao buscar categorias', is_manter_retorno=True)
     def buscar_categorias(self):
         return self.select(query=f"""
             SELECT id, nome
@@ -39,13 +36,11 @@ class AgendaModel(SQLConexao):
             ORDER BY nome
         """)
 
-    @Response(desc_error='Model: Erro ao salvar evento', is_manter_retorno=True)
     def salvar_evento(self, dict_evento=None, is_edicao=False):
         if is_edicao:
             self.update(nm_tabela='clinica_agenda', dict_coluna_valor=dict_evento, filtro_where={'id': dict_evento['id']})
             return
         self.insert(nm_tabela='clinica_agenda', dict_coluna_valor=dict_evento, is_primeiro=False)
 
-    @Response(desc_error='Model: Erro ao habilitar/desabilitar evento', is_manter_retorno=True)
     def trocar_status(self, evento_id=None, status=None):
         self.update(nm_tabela='clinica_agenda', dict_coluna_valor={'status': status}, filtro_where={'id': evento_id})

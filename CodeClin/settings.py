@@ -29,6 +29,7 @@ SECRET_KEY = 'django-insecure-d+h@b8udkb&(&3l0i=d8@_txf!5d**=zju+5pb@n&9excljle5
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '*',  ".vercel.app", ".now.sh"]
+CORS_ALLOW_CREDENTIALS = True
 
 
 # Application definition
@@ -63,12 +64,12 @@ ROOT_URLCONF = 'CodeClin.urls'
 
 MIDDLEWARE = [
     'core.middleware.GlobalRequestMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django_tenants.middleware.main.TenantMainMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',

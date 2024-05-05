@@ -1,4 +1,3 @@
-from BO.base.decorators import Response
 from model.base.sql import SQLConexao
 
 
@@ -6,7 +5,6 @@ class SessaoModel(SQLConexao):
     def __init__(self):
         super().__init__()
 
-    @Response(desc_error='Model: Erro ao buscar informacoes do usuario', is_manter_retorno=True)
     def get_usuario(self, user_id=None):
         return self.select(
             query=f"""
@@ -21,7 +19,7 @@ class SessaoModel(SQLConexao):
             is_primeiro=True
         )
 
-    @Response(desc_error='Model: Erro ao buscar permissões do usuario', is_manter_retorno=True)
+
     def get_pontofuncao_user(self, matricula=None):
         return self.select(query=f"""
                 SELECT ponto_funcao_id FROM {self.schema_cliente}.funcionario_perfilpontofuncao upp

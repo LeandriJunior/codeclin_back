@@ -9,4 +9,4 @@ class PesquisarView(APIView):
         response = Funcionario().buscar_funcionarios_pesquisa(
             pesquisa=self.request.GET.get('pesquisa')
         )
-        return JsonResponse(response, safe=False, status=response['status_code'])
+        return JsonResponse(response, safe=False, status=200)

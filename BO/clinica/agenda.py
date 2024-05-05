@@ -1,7 +1,6 @@
 from datetime import datetime
 
 import model.clinica.agenda
-from BO.base.decorators import Response
 import model.clinica.agenda as agendaModel
 import BO.user.funcionario as funcionario
 import BO.user.cliente as cliente
@@ -11,7 +10,6 @@ class Agenda:
     def __init__(self, evento_id=None):
         self.evento_id = evento_id
 
-    @Response(desc_error='Erro ao buscar dados da agenda', lista_retornos=['agenda'])
     def buscar_agenda(self, data_ini=None, data_fim=None, agenda_id=None, is_ativo=True, is_primeiro=False):
         condicao = '1=1'
         if data_ini:
@@ -31,7 +29,6 @@ class Agenda:
 
         return agendaModel.AgendaModel().buscar_agenda(condicao=condicao, is_primeiro=is_primeiro, parametros=parametros)
 
-    @Response(desc_error='Erro ao buscar o evento', lista_retornos=['evento'])
     def buscar_evento(self):
         agenda = []
         if self.evento_id:
@@ -39,7 +36,7 @@ class Agenda:
                 agenda_id=self.evento_id,
                 is_primeiro=True,
                 is_ativo=True
-            )['agenda']
+            )
 
         return {
             'agenda': agenda,
@@ -47,7 +44,6 @@ class Agenda:
             'lista_clientes': cliente.Cliente().buscar_clientes()['lista_clientes'],
         }
 
-    @Response(desc_error='Erro ao salvar evento')
     def salvar_evento(self, cliente_id=None, funcionario_id=None, funcionario_funcionamento_id=None, data_ini=None, data_fim=None, procedimento=None,
                       observacao=None):
         is_edicao=False
@@ -76,11 +72,9 @@ class Agenda:
 
         model.clinica.agenda.AgendaModel().salvar_evento(dict_evento, is_edicao=is_edicao)
 
-    @Response(desc_error='Erro ao buscar categorias ', lista_retornos=['lista_categorias'])
     def buscar_categorias(self):
         return model.clinica.agenda.AgendaModel().buscar_categorias()
 
-    @Response(desc_error='Erro ao habilitar/desabilitar evento', lista_retornos=['novo_status'])
     def trocar_status(self, status=True):
         return model.clinica.agenda.AgendaModel().trocar_status(
             evento_id=self.evento_id,
